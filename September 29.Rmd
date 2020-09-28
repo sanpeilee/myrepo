@@ -1,33 +1,93 @@
 ---
-title: "September 29"
+title: "Review of Topic 2: Data Manipulation"
 author: "Lee"
-date: "9/28/2020"
+date: "9/29/2020"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+## **Reading Datasets**
 
-## R Markdown
+fix() #open data sheet
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+str() #structure of data
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+summary() #summarize data
 
-```{r cars}
-summary(cars)
-```
+class() #gives class of data or object
 
-## Including Plots
 
-You can also embed plots, for example:
+## **Generating Random Sample**
 
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
+sample(data, size, replace = T)
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-library(datasets)
-rairuoho <- read.table('Data/rairuoho.txt', header = T, sep = "\t", dec = ".")
+## **Base Functions vs. dplyr**
+
+## Selecting Variables
+
+data$variable1
+
+data[,] #select specific row or column
+
+## Selecting Variables with dplyr
+
+select(data, variable1, variable2)
+
+
+## Subsetting
+
+b <- data$variable1 == "blue" #set condition
+
+blue <- data$variable1[b,] #create filter
+
+## Subsetting with dplyr
+
+blue <- filter(data, variable1 == "blue")
+
+
+## Changing and Adding/Removing Columns
+
+colors <- data$variable1
+
+colors <- ifelse(colors == "blue", "green", "yellow") #change column
+
+data$variable3 <- ifelse(colors == "blue", "green", "yellow") #add column
+
+data$variable3 <- NULL #remove column
+
+## Changing Columns with dplyr
+
+mutate (data, height = length * 2)
+
+
+## Sorting/Arranging Variables
+
+data[order(data$height),]
+
+order(-data$height)
+
+order(data$height, decreasing = T)
+
+## Sorting/Arranging Variables with dplyr
+
+arrange(data, height)
+
+arrange(data, desc(height))
+
+
+## **Other Functions using dplyr**
+
+## Grouping and Summarizing Into Single Value
+
+gp <- group_by(data, colors)
+
+summarise(gp, Height = mean(height))
+
+
+## Multiple Functions Using Pipe Operator
+
+data %>% group_by(colors) %>% summarise(Height = mean(height))
+
+
+
+
