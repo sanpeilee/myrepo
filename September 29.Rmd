@@ -29,5 +29,5 @@ plot(pressure)
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
-Hello
-How are you
+library(datasets)
+rairuoho <- read.table('Data/rairuoho.txt', header = T, sep = "\t", dec = ".")
